@@ -2,7 +2,7 @@ import React from "react";
 
 class Search extends React.Component {
   state = {
-    search: "",
+    search: "matrix",
     type: "all",
   };
 
@@ -13,10 +13,19 @@ class Search extends React.Component {
   };
 
   handleFilter = (event) => {
-    this.setState(() => ({ type: event.target.dataset.type }), () => {
-    this.props.searchMovies(this.state.search, this.state.type);
-    });
+    this.setState(
+      () => ({ type: event.target.dataset.type }),
+      () => {
+        this.props.searchMovies(this.state.search, this.state.type);
+      }
+    );
   };
+
+  validateSearch = () => {
+    if (!/^[A-Za-z][A-Za-z0-9]*$/.test(this.state.search)) {
+        alert('Wrong ')
+    }
+}
 
   render() {
     return (
@@ -29,10 +38,13 @@ class Search extends React.Component {
             value={this.state.search}
             onChange={(e) => this.setState({ search: e.target.value })}
             onKeyDown={this.hanleKey}
+            onFocus={() => this.setState({ search: "" })}
           />
           <button
             className="btn search-btn"
-            onClick={() => this.props.searchMovies(this.state.search, this.state.type)}
+            onClick={() =>
+              this.props.searchMovies(this.state.search, this.state.type)
+            }
           >
             Search
           </button>
@@ -45,7 +57,7 @@ class Search extends React.Component {
               type="radio"
               data-type="all"
               onChange={this.handleFilter}
-              checked={this.state.type === 'all'}
+              checked={this.state.type === "all"}
             />
             <span>All</span>
           </label>
@@ -56,7 +68,7 @@ class Search extends React.Component {
               type="radio"
               data-type="movie"
               onChange={this.handleFilter}
-              checked={this.state.type === 'movie'}
+              checked={this.state.type === "movie"}
             />
             <span>Movies only</span>
           </label>
@@ -67,7 +79,7 @@ class Search extends React.Component {
               type="radio"
               data-type="series"
               onChange={this.handleFilter}
-              checked={this.state.type === 'series'}
+              checked={this.state.type === "series"}
             />
             <span>Series only</span>
           </label>
