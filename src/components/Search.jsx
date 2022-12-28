@@ -38,7 +38,6 @@ class Search extends React.Component {
             value={this.state.search}
             onChange={(e) => this.setState({ search: e.target.value })}
             onKeyDown={this.hanleKey}
-            onFocus={() => this.setState({ search: "" })}
           />
           <button
             className="btn search-btn"
